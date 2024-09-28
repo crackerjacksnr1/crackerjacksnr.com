@@ -1,1 +1,139 @@
-<h1>Hello World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrackerJacksNR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Background image section */
+        .welcome-screen {
+            background-image: url('background.jpg'); /* Replace with your image */
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            position: relative;
+            height: 100vh;
+        }
+
+        /* Overlay to add more blur effect */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Title style */
+        .welcome-text {
+            color: #fff;
+            text-align: center;
+        }
+
+        .welcome-text h1 {
+            font-size: 4rem;
+            letter-spacing: 5px;
+        }
+
+        .welcome-text p {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        /* Section styling */
+        section {
+            padding: 100px 20px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Add smooth fade effect */
+        section.fade {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome screen -->
+    <div class="welcome-screen">
+        <div class="overlay">
+            <div class="welcome-text">
+                <h1>CrackerJacksNR</h1>
+                <p>Welcome to our site</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us section -->
+    <section id="about" class="fade">
+        <h2>About Us</h2>
+        <p>CrackerJacksNR is a leading platform for [description about the website]. Learn more about our journey and the exciting things we have to offer.</p>
+    </section>
+
+    <!-- Our Other Domains section -->
+    <section id="domains" class="fade">
+        <h2>Our Other Domains</h2>
+        <p>Explore our other projects and platforms including [domain 1], [domain 2], and more.</p>
+    </section>
+
+    <!-- Gaming section -->
+    <section id="gaming" class="fade">
+        <h2>Gaming</h2>
+        <p>Check out our latest gaming content and community for all gaming enthusiasts. Join us for events, streams, and more.</p>
+    </section>
+
+    <script>
+        // Intersection Observer to reveal sections on scroll
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
