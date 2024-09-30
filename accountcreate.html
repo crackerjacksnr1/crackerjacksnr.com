@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Crackerjacksnr</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .background {
+      background-image: url('./media/background.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(5px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    }
+
+    #create-account-container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      width: 350px;
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div id="create-account-container">
+    <img src="./media/logo.png" alt="Logo" style="width: 150px;">
+    <h1>Create Account</h1>
+    
+    <div>
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+      <button onclick="createAccount()">Create Account</button>
+      <p class="error-message" id="error-message"></p>
+      <p class="success-message" id="success-message"></p>
+    </div>
+  </div>
+
+  <script>
+    // Create account function using localStorage for storing user data
+    function createAccount() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password !== confirmPassword) {
+        showError('Passwords do not match.');
+        return;
+      }
+
+      const accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+
+      if (accounts[username]) {
+        showError('Username already exists.');
+        return;
+      }
+
+      // Add new account to localStorage
+      accounts[username] = { email, password };
+      localStorage.setItem('accounts', JSON.stringify(accounts));
+
+      showSuccess('Account created successfully! Redirecting to login...');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+    }
+
+    function showError(message) {
+      document.getElementById('error-message').textContent = message;
+      document.getElementById('success-message').textContent = ''; // Clear success message
+    }
+
+    function showSuccess(message) {
+      document.getElementById('success-message').textContent = message;
+      document.getElementById('error-message').textContent = ''; // Clear error message
+    }
+  </script>
+</body>
+</html>

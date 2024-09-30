@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>crackerjacksnr.com BETA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Blurred background */
+    .background {
+      background-image: url('./media/background.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(5px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    }
+
+    #login-container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1; /* Ensure the content stays above the background */
+    }
+
+    h1 {
+      font-size: 3em;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #options {
+      margin-top: 10px;
+    }
+
+    #options a {
+      font-size: 0.9em;
+      text-decoration: none;
+      color: #007bff;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    #options a:hover {
+      color: #008cff;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background container with blur -->
+  <div class="background"></div>
+
+  <!-- Foreground login form container -->
+  <div id="login-container">
+    <img src="./media/logo.png" alt="Logo" style="width: 150px;">
+    <h1>beta.crackerjacksnr.com</h1>
+    <p>Please login to access restricted beta website.</p>
+    
+    <div>
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button onclick="login()">Login</button>
+      <p class="error-message" id="error-message"></p>
+    </div>
+
+    <div id="options">
+      <a id="create-account">Create An Account</a> • <a id="forgot-password">Forgot Password</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Check if user is already logged in
+      const loggedIn = localStorage.getItem("loggedIn");
+      if (loggedIn) {
+        window.location.href = "home.html";
+      }
+
+      // Handle redirects for Create Account and Forgot Password
+      document.getElementById('create-account').addEventListener('click', function() {
+        window.location.href = "accountcreate.html";
+      });
+
+      document.getElementById('forgot-password').addEventListener('click', function() {
+        window.location.href = "resetpassword.html";
+      });
+    });
+
+    function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const accounts = JSON.parse(localStorage.getItem('accounts')) || {};
+
+    if (!accounts[username]) {
+     showError('Account does not exist.');
+     return;
+    }
+
+    if (accounts[username].password !== password) {
+     showError('Invalid password.');
+     return;
+    }
+
+  // Save login status in localStorage
+  localStorage.setItem('loggedInUser', username);
+  showSuccess('Login successful! Redirecting to home...');
+  setTimeout(() => {
+    window.location.href = 'home.html';
+  }, 2000);
+}
+
+    function showError(message) {
+      document.getElementById('error-message').textContent = message;
+    }
+  </script>
+</body>
+</html>
